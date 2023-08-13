@@ -1,8 +1,9 @@
 // Add imports above this line
 import { galleryItems } from './gallery-items';
 // Change code below this line
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
-//Сделать рефакторинг
 const list = document.querySelector('.gallery');
 
 const markup = galleryItems
@@ -12,10 +13,7 @@ const markup = galleryItems
         <img
         class="gallery_image"
         src="${preview}"
-        data-source="${original}"
         alt="${description}"
-        width="350"
-        height="auto"
         />
         </a>
         </li>`
@@ -24,37 +22,12 @@ const markup = galleryItems
 
 list.insertAdjacentHTML('beforeend', markup);
 
-list.addEventListener('click', openModal);
+new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionsPosition: 'bottom',
+  captionsDelay: 250,
+});
 
-function openModal(evt) {
-  evt.preventDefault();
+console.log('object');
 
-  if (!evt.target.classList.contains('gallery_image')) {
-    return;
-  }
-
-  const modalImg = evt.target.dataset.source;
-  const instance = basicLightbox.create(
-    `<img src="${modalImg}" width="800" height="600">`,
-    {
-      onShow: instance => {
-        document.addEventListener('keydown', closeModal);
-      },
-
-      onClose: instance => {
-        document.removeEventListener('keydown', closeModal);
-      },
-    }
-  );
-
-  instance.show();
-
-  function closeModal(evt) {
-    if (evt.code === 'Escape') {
-      instance.close();
-    }
-  }
-}
-//Конец рефакторинга
-
-console.log(galleryItems);
+//console.log(galleryItems);
