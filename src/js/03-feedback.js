@@ -18,6 +18,10 @@ function handlerOnInput() {
     email: form.elements.email.value,
     message: form.elements.message.value,
   };
+
+  //console.log(email.value);
+  //console.log(message.value);
+
   localStorage.setItem(storageKey, JSON.stringify(userData));
 }
 
@@ -28,7 +32,4 @@ function handlerSubmit(event) {
   console.log(JSON.parse(localStorage.getItem(storageKey)));
   form.reset();
   localStorage.removeItem(storageKey);
-  if (email.value === '' || message.value === '') {
-    return alert('Please fill in all the fields!');
-  }
 }
